@@ -1,0 +1,99 @@
+2019-06-04 07:46:53,830 INFO: Microblog startup__ [in /home/felipon/sandbox/blog-mega-tutorial/app/__init__.py:51]
+2019-06-04 07:47:38,621 INFO: Microblog startup__ [in /home/felipon/sandbox/blog-mega-tutorial/app/__init__.py:51]
+2019-06-04 07:48:02,484 ERROR: Exception on /edit_profile [POST] [in /home/felipon/sandbox/blog-mega-tutorial/env/lib/python3.7/site-packages/flask/app.py:1761]
+Traceback (most recent call last):
+  File "/home/felipon/sandbox/blog-mega-tutorial/env/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1244, in _execute_context
+    cursor, statement, parameters, context
+  File "/home/felipon/sandbox/blog-mega-tutorial/env/lib/python3.7/site-packages/sqlalchemy/engine/default.py", line 552, in do_execute
+    cursor.execute(statement, parameters)
+sqlite3.IntegrityError: UNIQUE constraint failed: user.username
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/felipon/sandbox/blog-mega-tutorial/env/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/felipon/sandbox/blog-mega-tutorial/env/lib/python3.7/site-packages/flask/app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/felipon/sandbox/blog-mega-tutorial/env/lib/python3.7/site-packages/flask/app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/felipon/sandbox/blog-mega-tutorial/env/lib/python3.7/site-packages/flask/_compat.py", line 35, in reraise
+    raise value
+  File "/home/felipon/sandbox/blog-mega-tutorial/env/lib/python3.7/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/felipon/sandbox/blog-mega-tutorial/env/lib/python3.7/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/felipon/sandbox/blog-mega-tutorial/env/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/felipon/sandbox/blog-mega-tutorial/app/routes.py", line 83, in edit_profile
+    db.session.commit()
+  File "/home/felipon/sandbox/blog-mega-tutorial/env/lib/python3.7/site-packages/sqlalchemy/orm/scoping.py", line 162, in do
+    return getattr(self.registry(), name)(*args, **kwargs)
+  File "/home/felipon/sandbox/blog-mega-tutorial/env/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 1026, in commit
+    self.transaction.commit()
+  File "/home/felipon/sandbox/blog-mega-tutorial/env/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 493, in commit
+    self._prepare_impl()
+  File "/home/felipon/sandbox/blog-mega-tutorial/env/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 472, in _prepare_impl
+    self.session.flush()
+  File "/home/felipon/sandbox/blog-mega-tutorial/env/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 2451, in flush
+    self._flush(objects)
+  File "/home/felipon/sandbox/blog-mega-tutorial/env/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 2589, in _flush
+    transaction.rollback(_capture_exception=True)
+  File "/home/felipon/sandbox/blog-mega-tutorial/env/lib/python3.7/site-packages/sqlalchemy/util/langhelpers.py", line 68, in __exit__
+    compat.reraise(exc_type, exc_value, exc_tb)
+  File "/home/felipon/sandbox/blog-mega-tutorial/env/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 129, in reraise
+    raise value
+  File "/home/felipon/sandbox/blog-mega-tutorial/env/lib/python3.7/site-packages/sqlalchemy/orm/session.py", line 2549, in _flush
+    flush_context.execute()
+  File "/home/felipon/sandbox/blog-mega-tutorial/env/lib/python3.7/site-packages/sqlalchemy/orm/unitofwork.py", line 422, in execute
+    rec.execute(self)
+  File "/home/felipon/sandbox/blog-mega-tutorial/env/lib/python3.7/site-packages/sqlalchemy/orm/unitofwork.py", line 589, in execute
+    uow,
+  File "/home/felipon/sandbox/blog-mega-tutorial/env/lib/python3.7/site-packages/sqlalchemy/orm/persistence.py", line 236, in save_obj
+    update,
+  File "/home/felipon/sandbox/blog-mega-tutorial/env/lib/python3.7/site-packages/sqlalchemy/orm/persistence.py", line 978, in _emit_update_statements
+    statement, multiparams
+  File "/home/felipon/sandbox/blog-mega-tutorial/env/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 988, in execute
+    return meth(self, multiparams, params)
+  File "/home/felipon/sandbox/blog-mega-tutorial/env/lib/python3.7/site-packages/sqlalchemy/sql/elements.py", line 287, in _execute_on_connection
+    return connection._execute_clauseelement(self, multiparams, params)
+  File "/home/felipon/sandbox/blog-mega-tutorial/env/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1107, in _execute_clauseelement
+    distilled_params,
+  File "/home/felipon/sandbox/blog-mega-tutorial/env/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1248, in _execute_context
+    e, statement, parameters, cursor, context
+  File "/home/felipon/sandbox/blog-mega-tutorial/env/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1466, in _handle_dbapi_exception
+    util.raise_from_cause(sqlalchemy_exception, exc_info)
+  File "/home/felipon/sandbox/blog-mega-tutorial/env/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 383, in raise_from_cause
+    reraise(type(exception), exception, tb=exc_tb, cause=cause)
+  File "/home/felipon/sandbox/blog-mega-tutorial/env/lib/python3.7/site-packages/sqlalchemy/util/compat.py", line 128, in reraise
+    raise value.with_traceback(tb)
+  File "/home/felipon/sandbox/blog-mega-tutorial/env/lib/python3.7/site-packages/sqlalchemy/engine/base.py", line 1244, in _execute_context
+    cursor, statement, parameters, context
+  File "/home/felipon/sandbox/blog-mega-tutorial/env/lib/python3.7/site-packages/sqlalchemy/engine/default.py", line 552, in do_execute
+    cursor.execute(statement, parameters)
+sqlalchemy.exc.IntegrityError: (sqlite3.IntegrityError) UNIQUE constraint failed: user.username
+[SQL: UPDATE user SET username=?, about_me=? WHERE user.id = ?]
+[parameters: ('felipon', 'This seems to be unfair, how about you', 3)]
+(Background on this error at: http://sqlalche.me/e/gkpj)
+2019-06-05 11:42:15,959 INFO: Microblog startup__ [in /home/felipon/sandbox/blog-mega-tutorial/app/__init__.py:51]
+2019-06-05 11:42:56,970 ERROR: Exception on /edit_profile [GET] [in /home/felipon/sandbox/blog-mega-tutorial/env/lib/python3.7/site-packages/flask/app.py:1761]
+Traceback (most recent call last):
+  File "/home/felipon/sandbox/blog-mega-tutorial/env/lib/python3.7/site-packages/flask/app.py", line 2292, in wsgi_app
+    response = self.full_dispatch_request()
+  File "/home/felipon/sandbox/blog-mega-tutorial/env/lib/python3.7/site-packages/flask/app.py", line 1815, in full_dispatch_request
+    rv = self.handle_user_exception(e)
+  File "/home/felipon/sandbox/blog-mega-tutorial/env/lib/python3.7/site-packages/flask/app.py", line 1718, in handle_user_exception
+    reraise(exc_type, exc_value, tb)
+  File "/home/felipon/sandbox/blog-mega-tutorial/env/lib/python3.7/site-packages/flask/_compat.py", line 35, in reraise
+    raise value
+  File "/home/felipon/sandbox/blog-mega-tutorial/env/lib/python3.7/site-packages/flask/app.py", line 1813, in full_dispatch_request
+    rv = self.dispatch_request()
+  File "/home/felipon/sandbox/blog-mega-tutorial/env/lib/python3.7/site-packages/flask/app.py", line 1799, in dispatch_request
+    return self.view_functions[rule.endpoint](**req.view_args)
+  File "/home/felipon/sandbox/blog-mega-tutorial/env/lib/python3.7/site-packages/flask_login/utils.py", line 261, in decorated_view
+    return func(*args, **kwargs)
+  File "/home/felipon/sandbox/blog-mega-tutorial/app/routes.py", line 79, in edit_profile
+    form = EditProfileForm()
+  File "/home/felipon/sandbox/blog-mega-tutorial/env/lib/python3.7/site-packages/wtforms/form.py", line 212, in __call__
+    return type.__call__(cls, *args, **kwargs)
+TypeError: __init__() missing 1 required positional argument: 'original_username'
