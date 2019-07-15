@@ -126,3 +126,4 @@ dmypy.json
 # Editor temp files 
 .swp
 .vscode
+*.code-workspace
