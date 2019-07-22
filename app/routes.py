@@ -1,16 +1,19 @@
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, g, session
 from werkzeug.urls import url_parse
 from flask_login import current_user, login_user, logout_user, login_required
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm, SearchForm
 from app.models import User, Post
 from datetime import datetime
 
 @app.before_request
-def befor_request():
-    if current_user.is_authenticated:
-        current_user.last_seen = datetime.utcnow()
+def before_request():
+    g.user = current_user
+    if g.user.is_authenticated:
+        g.user.last_seen = datetime.utcnow()
+        db.session.add(g.user)
         db.session.commit()
+        g.search_form = SearchForm()
 
 @app.route('/', methods=['GET','POST'])
 @app.route('/index', methods=['GET', 'POST'])
@@ -151,3 +154,19 @@ def explore():
             if posts.has_prev else None
     return render_template('index.html', title='Explore',
             posts=posts.items, next_url=next_url, prev_url=prev_url)
+
+@app.route('/search', methods=['POST'])
+@login_required
+def search():
+    if not g.search_form.validate_on_submit():
+        return redirect(url_for('index.'))
+    return redirect(url_for('search_results', query=g.search_form.search.data))
+
+@app.route('/search_results/<query>')
+@login_required
+def search_results(query):
+    MAX_SEARCH_RESULTS = app.config['MAX_SEARCH_RESULTS'] 
+    results = Post.query.whooshee_search(query, limit=MAX_SEARCH_RESULTS).all()
+    return render_template('search_results.html',
+                            query=query,
+                            results=results)

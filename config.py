@@ -23,3 +23,7 @@ class Config(object):
     # Variable que configura los post por pagina
     # para pruebas se pone un numero bajo
     POSTS_PER_PAGE = 2
+
+    # Configuracion para whoosh el buscador de texto
+    WHOOSHEE_DIR = os.path.join(basedir, 'whooshee')
+    MAX_SEARCH_RESULTS = 50

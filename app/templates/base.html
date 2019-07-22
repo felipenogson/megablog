@@ -12,12 +12,16 @@
     <div>
         Microblog:
         <a href=" {{ url_for( 'index' ) }} ">Home</a>
-        {% if current_user.is_anonymous %}
-        <a href=" {{ url_for( 'login' ) }} ">Login</a>
-        {% else %}
-        <a href=" {{ url_for( 'explore' ) }}">Explore</a>
-        <a href="{{ url_for('user', username=current_user.username) }}">Profile</a>
-        <a href=" {{ url_for( 'logout' ) }} ">Logout</a>
+        {% if g.user.is_authenticated %}
+            <a href="{{ url_for('user', username=g.user.username) }}"></a>
+            <form action="{{ url_for('search')}}" method="POST" name=search>
+                {{ g.search_form.hidden_tag() }}
+                {{ g.search_form.search(size=20) }}
+                <input type="Submit" value="search">
+                <a href=" {{ url_for( 'explore' ) }}">Explore</a>
+                <a href="{{ url_for('user', username=current_user.username) }}">Profile</a>
+                <a href="{{ url_for('logout') }}">Logout</a>
+            </form>
         {% endif %}
     </div>
     <hr>

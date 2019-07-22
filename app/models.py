@@ -1,9 +1,11 @@
-from app import db
+from app import app, db
 from datetime import datetime
 from hashlib import md5
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from app import login
+from app import whooshee
+
 
 
 followers = db.Table('followers',
@@ -55,6 +57,7 @@ class User(UserMixin, db.Model):
         return '<User {}>'.format(self.username)
 
 
+@whooshee.register_model('body')
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     body = db.Column(db.String(140))
@@ -63,6 +66,7 @@ class Post(db.Model):
 
     def __repr__(self):
         return '<Post {}>'.format(self.body)
+
 
 @login.user_loader
 def load_user(id):
