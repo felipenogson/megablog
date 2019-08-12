@@ -2,7 +2,7 @@ from flask import render_template, flash, redirect, url_for, request, g, session
 from werkzeug.urls import url_parse
 from flask_login import current_user, login_user, logout_user, login_required
 from app import app, db
-from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm, SearchForm
+from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm, SearchForm, ResetPasswordRequestForm
 from app.models import User, Post
 from datetime import datetime
 
@@ -170,3 +170,8 @@ def search_results(query):
     return render_template('search_results.html',
                             query=query,
                             results=results)
+
+@app.route('/reset_password_request', methods=['GET','POST'])
+def reset_password_request():
+    form = ResetPasswordRequestForm()
+    return render_template('reset_password_request.html', Title="Reset Password", form=form)
