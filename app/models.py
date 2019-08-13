@@ -5,6 +5,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from app import login
 from app import whooshee
+import jwt
 
 
 
@@ -35,6 +36,7 @@ class User(UserMixin, db.Model):
     def avatar(self, size):
         digest = md5(self.email.lower().encode('utf-8')).hexdigest()
         return f'https://www.gravatar.com/avatar/{digest}?d=identicon&s={size}'
+
     def follow(self, user):
         if not self.is_following(user):
             self.followed.append(user)
@@ -52,6 +54,20 @@ class User(UserMixin, db.Model):
                 followers, (followers.c.followed_id == Post.user_id)).filter(followers.c.follower_id == self.id)
         own = Post.query.filter_by(user_id=self.id)
         return followed.union(own).order_by(Post.timestamp.desc())
+    
+    def reset_password_token(self, expires_in=6000):
+        return jwt.encode(
+            {'reset_password': self.id, 'exp': time()+expires_in},
+            app.config['SECRET_KEY']).decode('utf-8')}
+
+    @staticmethod
+    def verify_reset_password_token(token):
+        try:
+            id = jwt.decode(token, app.config['SECRET_KEY'], )['reset_password']
+        except: 
+            return
+        return User.query.get(id)
+
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
