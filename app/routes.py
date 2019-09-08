@@ -6,17 +6,19 @@ from app.forms import LoginForm, RegistrationForm, EditProfileForm, PostForm, Se
 from app.models import User, Post
 from datetime import datetime
 from app.email import send_password_reset_email
-from flask_babel import _
+from flask_babel import _, get_locale
 from flask_babel import lazy_gettext as _l
 
 @app.before_request
 def before_request():
     g.user = current_user
+    g.locale = str(get_locale())
     if g.user.is_authenticated:
         g.user.last_seen = datetime.utcnow()
         db.session.add(g.user)
         db.session.commit()
         g.search_form = SearchForm()
+    
 
 @app.route('/', methods=['GET','POST'])
 @app.route('/index', methods=['GET', 'POST'])
