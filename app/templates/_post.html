@@ -1,8 +1,28 @@
 <div class="post">
     <img class="user_icon" src="{{ post.author.avatar(36) }}" alt="avatar(36) }}">
     <p>
+        {% set user_link %}
     <a href="{{ url_for('user', username=post.author.username)}}"><span class="author">{{ post.author.username }}</span></a> 
-    said {{ moment(post.timestamp).fromNow() }}: <br>
+    {% endset %}
+    {{ _('%(username)s said %(when)s', 
+        username=user_link, when=moment(post.timestamp).fromNow())}}
+        <br>
+        <span id="post{{ post.id }}">
         {{ post.body }}
+        </span>
+        {% if post.language and post.language != g.locale %}
+        <br>
+        <span id="translation{{ post.id }}">
+            <a href="javascript:translate(
+                '#post{{ post.id }}',
+                '#translation{{ post.id }}',
+                '{{ post.language }}',
+                '{{ g.locale }}');">
+                {{ _('Translate')}}
+                </a>
+        </span>
+        <br>
+        {% endif %}
+
     </p>
 </div>
