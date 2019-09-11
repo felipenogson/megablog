@@ -30,3 +30,6 @@ class Config(object):
 
     # Configuracion para babel i18n y l10n
     LANGUAGES = ['en', 'es']
+    MS_TRANSLATOR_KEY = os.environ.get('MS_TRANSLATOR_KEY') or None
+    MS_TRANSLATOR_ENDPOINT = os.environ.get('MS_TRANSLATOR_ENDPOINT') or None
+
