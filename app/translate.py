@@ -24,4 +24,6 @@ def translate(text,  dest_language, source_language=None):
     print(headers)
 
     r = requests.post(constructed_url, headers=headers, json=body)
-    return r
+    if r.status_code != 200:
+        return _('Error: the tranlsation service failed.')
+    return json.loads(r.content.decode('utf-8-sig'))
