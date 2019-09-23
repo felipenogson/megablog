@@ -1,32 +1,39 @@
-from flask import Flask, request
-from config import Config
+import logging
+from logging.handlers import SMTPHandler, RotatingFileHandler
+import os
+from flask import Flask, request, current_app
 from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate
-from flask_whooshee import Whooshee
 from flask_login import LoginManager
 from flask_mail import Mail
 from flask_bootstrap import Bootstrap
 from flask_moment import Moment
-from flask_babel import Babel
-from flask_babel import lazy_gettext as _l
-import logging
-from logging.handlers import SMTPHandler, RotatingFileHandler
-import os
+from flask_babel import Babel, lazy_gettext as _l
+from config import Config
+from flask_whooshee import Whooshee
 
-app = Flask(__name__)
-app.config.from_object(Config)
-db = SQLAlchemy(app)
-migrate = Migrate(app, db)
-login = LoginManager(app)
-login.login_view = 'login'
+db = SQLAlchemy()
+migrate = Migrate()
+login = LoginManager()
+login.login_view = 'auth.login'
 login.login_message = _l('Please log in to access this page')
-whooshee = Whooshee(app)
-mail = Mail(app)
-bootstrap = Bootstrap(app)
-moment = Moment(app)
-babel = Babel(app)
+whooshee = Whooshee()
+mail = Mail()
+bootstrap = Bootstrap()
+moment = Moment()
+babel = Babel()
 
-from app import routes, models, errors
+# No esta funcionando, estoy creando la funcion para crear la aplicacion y usar blueprint
+def create_app(config_class=Config):
+    app = Flask(__name__)
+
+from app.errors import bp as errors_bp
+app.register_blueprint(errors_bp)
+
+from app.auth import bp as auth_bp
+app.register_blueprint( auth_bp, prefix='/auth')
+
+from app import routes, models
 
 @babel.localeselector
 def get_locale():

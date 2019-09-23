@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, current_app
 from app import app, mail
 from flask_mail import Message
 from threading import Thread
